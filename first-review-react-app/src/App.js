@@ -2,11 +2,14 @@ import './App.css';
 import { useState } from 'react'
 
 function App() {
+  const [showEvents, setShowEvents] = useState(true)
   const [events, setEvents] = useState([
     {title: 'Event 1', id: 1},
     {title: 'Event 2', id: 2},
     {title: 'Event 3', id: 3},
   ])
+
+  console.log(showEvents)
 
   const handleClick = (id) => {
     console.log(id)
@@ -23,7 +26,19 @@ function App() {
 
   return (
     <div className="App">
-      {events.map((event, index) => (
+      {showEvents && (
+        <div>
+        <button onClick={() => setShowEvents(false)}>Hide events</button>
+      </div>
+      )}
+
+      {!showEvents && (
+        <div>
+        <button onClick={() => setShowEvents(true)}>Show events</button>
+      </div>
+      )}
+
+      {showEvents && events.map((event, index) => (
         <div key={event.id}>
           <h2>{index} - {event.title}</h2>
           <button onClick={() => handleClick(event.id)}>Delete event</button>
