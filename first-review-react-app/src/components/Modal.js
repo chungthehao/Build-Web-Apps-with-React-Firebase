@@ -12,7 +12,10 @@ export default function Modal({ children, handleClose, isSalesModal }) {
         }}>
           { children }
           <div>
-            <button onClick={handleClose}>Close</button>
+            <button 
+              onClick={handleClose} 
+              className={isSalesModal ? "sales-btn" : ""}
+            >Close</button>
           </div>
         </div>
       </div>, 
