@@ -4,6 +4,7 @@ import Title from './components/Title';
 import Modal from './components/Modal';
 
 function App() {
+  const [showModal, setShowModal] = useState(true)
   const [showEvents, setShowEvents] = useState(true)
   const [events, setEvents] = useState([
     {title: 'Event 1', id: 1},
@@ -50,10 +51,10 @@ function App() {
         </React.Fragment>
       ))}
 
-      <Modal>
+      {showModal && <Modal handleClose={() => setShowModal(false)}>
         <h2>Lorem ipsum dolor sit amet.</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, expedita.</p>
-      </Modal>
+      </Modal>}
     </div>
   );
 }
