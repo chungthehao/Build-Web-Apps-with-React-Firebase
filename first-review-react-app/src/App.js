@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState } from 'react'
 import Title from './components/Title';
 import Modal from './components/Modal';
+import EventList from './components/EventList';
 
 function App() {
   const [showModal, setShowModal] = useState(false)
@@ -44,12 +45,7 @@ function App() {
       </div>
       )}
 
-      {showEvents && events.map((event, index) => (
-        <React.Fragment key={event.id}>
-          <h2>{index} - {event.title}</h2>
-          <button onClick={() => handleClick(event.id)}>Delete event</button>
-        </React.Fragment>
-      ))}
+      {showEvents && <EventList events={events} handleClick={handleClick} />}
 
       {showModal && <Modal handleClose={() => setShowModal(false)}>
         <h2>Lorem ipsum dolor sit amet.</h2>
