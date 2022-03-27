@@ -47,7 +47,7 @@ function App() {
 
       {showEvents && <EventList events={events} handleClick={handleClick} />}
 
-      {showModal && <Modal handleClose={() => setShowModal(false)}>
+      {showModal && <Modal handleClose={() => setShowModal(false)} isSalesModal={true}>
         <h2>Lorem ipsum dolor sit amet.</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, expedita.</p>
       </Modal>}
