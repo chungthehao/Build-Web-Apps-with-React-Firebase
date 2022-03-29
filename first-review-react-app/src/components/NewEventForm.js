@@ -5,10 +5,12 @@ import './NewEventForm.css'
 export default function NewEventForm({ addEvent }) {
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
+  const [location, setLocation] = useState('ho chi minh')
 
   const resetForm = () => {
     setTitle('')
     setDate('')
+    setLocation('ho chi minh')
   }
 
   const handleSubmit = (e) => {
@@ -17,9 +19,10 @@ export default function NewEventForm({ addEvent }) {
     const event = {
       title: title,
       date: date,
+      location: location,
       id: Math.floor(Math.random() * 1000000)
     }
-
+    console.log(event)
     addEvent(event)
     resetForm()
   }
@@ -40,6 +43,15 @@ export default function NewEventForm({ addEvent }) {
           type="date" 
           onChange={e => setDate(e.target.value)} 
           value={date} />
+      </label>
+
+      <label>
+        <span>Event Location:</span>
+        <select onChange={e => setLocation(e.target.value)}>
+          <option value="ho chi minh">Ho Chi Minh</option>
+          <option value="ha noi">Ha Noi</option>
+          <option value="da nang">Da Nang</option>
+        </select>
       </label>
 
       <button>Submit</button>
