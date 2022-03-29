@@ -8,17 +8,16 @@ import NewEventForm from './components/NewEventForm';
 function App() {
   const [showModal, setShowModal] = useState(false)
   const [showEvents, setShowEvents] = useState(true)
-  const [events, setEvents] = useState([
-    {title: 'Event 1', id: 1},
-    {title: 'Event 2', id: 2},
-    {title: 'Event 3', id: 3},
-  ])
+  const [events, setEvents] = useState([])
 
-  console.log(showEvents)
+  const addEvent = newEvent => {
+    setEvents(prevEvents => {
+      return [...prevEvents, newEvent]
+    })
+    setShowModal(false)
+  }
 
   const handleClick = (id) => {
-    console.log(id)
-
     // setEvents ko cập nhật liền, tới lúc nó cập nhật events có thể đã bị chỗ khác thay đổi giá trị rồi ==> bị cũ
     // setEvents(events.filter((event) => {
     //   return event.id !== id
@@ -48,8 +47,8 @@ function App() {
 
       {showEvents && <EventList events={events} handleClick={handleClick} />}
 
-      {showModal && <Modal handleClose={() => setShowModal(false)} isSalesModal={true}>
-        <NewEventForm />
+      {showModal && <Modal isSalesModal={true}>
+        <NewEventForm addEvent={addEvent} />
       </Modal>}
 
       <div>
