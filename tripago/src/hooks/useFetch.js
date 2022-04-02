@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
 
-export const useFetch = (url) => {
+export const useFetch = (url, name) => {
   const [data, setData] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
 
-  const delay = n => new Promise(r => setTimeout(r, n))
+  // const delay = n => new Promise(r => setTimeout(r, n))
 
   useEffect(() => {
+    console.log(name)
     const controller = new AbortController()
 
     const fetchData = async () => {
@@ -18,7 +19,7 @@ export const useFetch = (url) => {
         if (!res.ok) {
           throw new Error(res.statusText)
         }
-        await delay(2000)
+
         const json = await res.json()
         setIsPending(false)
         setData(json)
@@ -35,7 +36,7 @@ export const useFetch = (url) => {
     fetchData()
 
     return () => controller.abort()
-  }, [url])
+  }, [url, name])
 
   console.log(data)
   return { data, isPending, error }
