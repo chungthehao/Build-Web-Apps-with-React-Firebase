@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-export const useFetch = (url, name) => {
+export const useFetch = (url, _options) => {
   const [data, setData] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
 
-  // const delay = n => new Promise(r => setTimeout(r, n))
+  const options = useRef(_options).current
 
   useEffect(() => {
-    console.log(name)
+    console.log(options)
     const controller = new AbortController()
 
     const fetchData = async () => {
@@ -25,8 +25,8 @@ export const useFetch = (url, name) => {
         setData(json)
         setError(null)
       } catch (err) {
-        console.log('err.name -->', err.name)
-        console.log('err.message -->', err.message)
+        // console.log('err.name -->', err.name)
+        // console.log('err.message -->', err.message)
         if (err.name !== 'AbortError') {
           setIsPending(false)
           setError('Could not fetch the data.')
@@ -36,7 +36,7 @@ export const useFetch = (url, name) => {
     fetchData()
 
     return () => controller.abort()
-  }, [url, name])
+  }, [url, options])
 
   console.log(data)
   return { data, isPending, error }
