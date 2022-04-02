@@ -5,15 +5,18 @@ export const useFetch = (url) => {
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
 
+  const delay = n => new Promise(r => setTimeout(r, n))
+
   useEffect(() => {
     const fetchData = async () => {
       setIsPending(true)
       try {
         const res = await fetch(url)
-        // console.log('RES', res)
+
         if (!res.ok) {
           throw new Error(res.statusText)
         }
+        await delay(1500)
         const json = await res.json()
         setIsPending(false)
         setData(json)
