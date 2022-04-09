@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import SingleCard from './components/SingleCard';
 
@@ -17,6 +17,7 @@ function App() {
   const [choiceOne, setChoiceOne] = useState(null)
   const [choiceTwo, setChoiceTwo] = useState(null)
 
+  // Shuffle cards
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random()-0.5)
@@ -26,11 +27,30 @@ function App() {
     setTurns(0)
   }
 
+  // Handle a choice
   const handleSelect = selectedCard => {
     choiceOne ? setChoiceTwo(selectedCard) : setChoiceOne(selectedCard)
   }
 
-  console.log(choiceOne, choiceTwo)
+  // Reset choices and Increase turns
+  const resetTurn = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setTurns(prevTurns => prevTurns + 1)
+  }
+
+  // Compare 2 chosen cards
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        console.log('They match.')
+      } else {
+        console.log('They do not match.')
+      }
+
+      resetTurn()
+    }
+  }, [choiceTwo])
 
   return (
     <div className="App">
