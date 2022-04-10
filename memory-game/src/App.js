@@ -26,6 +26,8 @@ function App() {
 
     setCards(shuffledCards)
     setTurns(0)
+    setChoiceOne(null)
+    setChoiceTwo(null)
   }
 
   // Handle a choice
