@@ -59,7 +59,10 @@ function App() {
     }
   }, [choiceTwo])
 
-  console.log(cards)
+  // Starting a new game, first loaded
+  useEffect(() => {
+    shuffleCards()
+  }, [])
 
   return (
     <div className="App">
