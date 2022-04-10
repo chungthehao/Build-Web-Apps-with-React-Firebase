@@ -1,6 +1,10 @@
 import './SingleCard.css'
 
-export default function SingleCard({ card, handleClick, flipped }) {
+export default function SingleCard({ card, handleClick, flipped, disabled }) {
+  const handlePick = () => {
+    if (!disabled) handleClick(card)
+  }
+
   return (
     <div className="card">
       <div className={flipped ? 'flipped' : ''}>
@@ -9,7 +13,7 @@ export default function SingleCard({ card, handleClick, flipped }) {
           src='/img/cover.png' 
           alt="back card" 
           className="back" 
-          onClick={() => handleClick(card)}
+          onClick={handlePick}
         />
       </div>
     </div>
