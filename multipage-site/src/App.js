@@ -11,6 +11,9 @@ function App() {
       <BrowserRouter>
         <nav>
           <h1>My Articles</h1>
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
         </nav>
 
         <Switch>
