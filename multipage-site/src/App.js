@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
@@ -13,17 +13,19 @@ function App() {
           <h1>My Articles</h1>
         </nav>
 
-        <Route path='/'>
-          <Home />
-        </Route>
+        <Switch>
+          <Route path='/'>
+            <Home />
+          </Route>
 
-        <Route path='/about'>
-          <About />
-        </Route>
+          <Route path='/about'>
+            <About />
+          </Route>
 
-        <Route path='/contact'>
-          <Contact />
-        </Route>
+          <Route path='/contact'>
+            <Contact />
+          </Route>
+        </Switch>
       </BrowserRouter>
     </div>
   );
