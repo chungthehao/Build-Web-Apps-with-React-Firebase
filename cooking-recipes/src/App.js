@@ -4,12 +4,15 @@ import Create from './pages/create/Create'
 import Search from './pages/search/Search'
 import Recipe from './pages/recipe/Recipe'
 
+import Navbar from './components/Navbar'
+
 import './App.css'
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <Navbar />
         <Switch>
           <Route path="/" exact>
             <Home />
