@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import RecipeList from '../../components/RecipeList'
 import { useFetch } from '../../hooks/useFetch'
 
 import './Home.css'
@@ -11,13 +11,7 @@ export default function Home() {
     <div className='home'>
       {isPending && <p className='loading'>LOADING...</p>}
       {error && <p className='error'>{error}</p>}
-      {recipes && recipes.map(recipe => (
-        <div key={recipe.id}>
-          <h2>{recipe.title}</h2>
-          <p>{recipe.cookingTime}</p>
-          <Link to={`/recipes/${recipe.id}`}>Read more...</Link>
-        </div>
-      ))}
+      {recipes && <RecipeList recipes={recipes} />}
     </div>
   )
 }
