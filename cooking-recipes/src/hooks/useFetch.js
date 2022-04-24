@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react"
 
-export const useFetch = (url) => {
+export const useFetch = (url, method = 'GET') => {
   const [data, setData] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
+  const [postData, setPostData] = useState(null)
 
   useEffect(() => {
     const controller = new AbortController()
 
-    const fetchData = async () => {
+    const fetchData = async (options = null) => {
       setIsPending(true)
       
       try {
-        const res = await fetch(url, { signal: controller.signal })
+        // console.log('OPTs', options)
+        const res = await fetch(url, { ...options, signal: controller.signal })
         if(!res.ok) {
           throw new Error(res.statusText)
         }
@@ -31,13 +33,23 @@ export const useFetch = (url) => {
       }
     }
 
-    fetchData()
+    if (method === 'GET') {
+      fetchData()
+    } else if (method === 'POST' && postData) {
+      fetchData({
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      })
+    }
 
     return () => {
       controller.abort()
     }
 
-  }, [url])
+  }, [url, postData, method])
 
-  return { data, isPending, error }
+  return { data, isPending, error, setPostData }
 }
