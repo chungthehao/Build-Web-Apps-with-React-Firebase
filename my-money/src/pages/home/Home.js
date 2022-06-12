@@ -9,7 +9,8 @@ function Home() {
     // console.log(user.uid)
     const { documents, error } = useCollection(
         'transactions', 
-        ['uid', '==', user.uid]
+        ['uid', '==', user.uid],
+        ['createdAt', 'desc']
     )
     // console.log(documents, error)
 
