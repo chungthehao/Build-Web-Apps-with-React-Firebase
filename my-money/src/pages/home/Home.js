@@ -9,7 +9,7 @@ function Home() {
     // console.log(user.uid)
     const { documents, error } = useCollection(
         'transactions', 
-        ['uid', '==', user.uid],
+        ['uid', '==', user.uid], // null: to test firestore rules
         ['createdAt', 'desc']
     )
     // console.log(documents, error)
