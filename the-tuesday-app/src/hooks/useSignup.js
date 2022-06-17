@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { projectAuth } from '../firebase/config'
+import { projectAuth, projectStorage } from '../firebase/config'
 import { useAuthContext } from './useAuthContext'
 
 
@@ -13,7 +13,7 @@ export const useSignup = () => {
     return () => setIsUnmounted(true)
   }, [])
 
-  const signup = async (email, password, displayName) => {
+  const signup = async (email, password, displayName, thumbnail) => {
     setError(null) // reset error
     setIsPending(true)
 
@@ -25,8 +25,13 @@ export const useSignup = () => {
         throw new Error('Could not complete the register!')
       }
 
-      // Add display name
-      await res.user.updateProfile({ displayName })
+      // Upload the photo
+      const uploadPath = `thumbnails/${res.user.uid}/${thumbnail.name}`
+      const img = await projectStorage.ref(uploadPath).put(thumbnail)
+      const imgUrl = await img.ref.getDownloadURL()
+
+      // Add display name, photoURL
+      await res.user.updateProfile({ displayName, photoURL: imgUrl })
 
       // Dispatch 'LOGIN' action
       dispatch({
