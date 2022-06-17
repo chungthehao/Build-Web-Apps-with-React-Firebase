@@ -6,11 +6,37 @@ function Signup() {
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [thumbnail, setThumbnail] = useState(null)
+  const [thumbnailError, setThumbnailError] = useState('')
 
   const handleSubmit = e => {
     e.preventDefault()
 
-    console.log(email, password, displayName)
+    console.log(email, password, displayName, thumbnail)
+  }
+
+  const handleFileChange = e => {
+    // Reset
+    setThumbnail(null)
+    setThumbnailError('')
+
+    const selectedFile = e.target.files[0]
+    // console.log(selectedFile)
+
+    // Validate the file
+    if ( ! selectedFile) {
+      setThumbnailError('Please choose one file.')
+      return
+    }
+    if ( ! selectedFile.type.includes('image')) {
+      setThumbnailError('The file must be an image.')
+      return
+    }
+    if (selectedFile.size > 100 * 1024) {
+      setThumbnailError('The file size must be under 100KB.')
+      return
+    }
+
+    setThumbnail(selectedFile)
   }
 
   return ( 
@@ -48,7 +74,9 @@ function Signup() {
         <input 
           type="file"
           required
+          onChange={handleFileChange}
         />
+        {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
       <button className="btn">Create this account</button>
     </form> 
