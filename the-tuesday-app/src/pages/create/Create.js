@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { timestamp } from '../../firebase/config';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection'
 import './Create.css';
 
@@ -19,7 +21,11 @@ function Create() {
   const [allUsers, setAllUsers] = useState([])
   const [formError, setFormError] = useState(null)
 
+  // Get all of the users from Firestore
   const { documents } = useCollection('users')
+
+  // Get the current logged in user
+  const { user } = useAuthContext()
   
   useEffect(() => {
     if (documents) {
@@ -45,7 +51,26 @@ function Create() {
       return
     }
 
-    console.log(name, details, dueDate, category.value, assignedUsers)
+    // Prepare a project obj
+    const project = {
+      name,
+      details,
+      category: category.value,
+      dueDate: timestamp.fromDate(new Date(dueDate)),
+      createdBy: {
+        id: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL
+      },
+      assignedUsersList: assignedUsers.map(assignedUser => ({
+        id: assignedUser.value.id,
+        displayName: assignedUser.value.displayName,
+        photoURL: assignedUser.value.photoURL
+      })),
+      comments: []
+    }
+
+    console.log(project)
   }
 
   return ( 
