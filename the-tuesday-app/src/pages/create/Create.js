@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { timestamp } from '../../firebase/config';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection'
+import { useFirestore } from '../../hooks/useFirestore'
 import './Create.css';
 
 const categories = [
@@ -20,12 +22,16 @@ function Create() {
   const [assignedUsers, setAssignedUsers] = useState([])
   const [allUsers, setAllUsers] = useState([])
   const [formError, setFormError] = useState(null)
+  const history = useHistory()
 
   // Get all of the users from Firestore
   const { documents } = useCollection('users')
 
   // Get the current logged in user
   const { user } = useAuthContext()
+
+  // Using useFirestore hook with the 'projects' collection
+  const { addADocument, response } = useFirestore('projects')
   
   useEffect(() => {
     if (documents) {
@@ -37,7 +43,7 @@ function Create() {
     }
   }, [documents])
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
     setFormError(null) // Reset error
 
@@ -71,6 +77,13 @@ function Create() {
     }
 
     console.log(project)
+
+    // Saving this project to Firestore
+    await addADocument(project)
+    // Redirect after saving the project data successfully
+    if ( ! response.error) {
+      history.push('/')
+    }
   }
 
   return ( 
