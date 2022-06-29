@@ -15,6 +15,8 @@ export const useDocument = (collectionName, documentId) => {
     const unsubscribe = ref.onSnapshot(snapshot => {
       if (snapshot.exists) {
         setDocument({ ...snapshot.data(), id: snapshot.id })
+      } else {
+        setError("This data doesn't exists.")
       }
     }, err => {
       console.log(err.message)
