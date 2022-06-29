@@ -2,7 +2,6 @@ const filterList = ['all', 'mine', 'development', 'design', 'marketing', 'sales'
 
 function ProjectFilter({ currentFilter, changeFilter }) {
   const handleClick = (f) => {
-    console.log(f)
     changeFilter(f)
   }
 
