@@ -24,6 +24,13 @@ const firestoreReducer = (state, action) => {
         error: null, 
         success: true 
       }
+    case 'UPDATED_DOCUMENT':
+      return {
+        isPending: false,
+        document: action.payload,
+        error: null,
+        success: true
+      }
     case 'ERROR': 
       return { 
         isPending: false, 
@@ -96,5 +103,19 @@ export const useFirestore = (collectionName) => {
     }
   }
 
-  return { response, addADocument, deleteADocument }
+  const updateADocument = async (docId, updateData) => {
+    dispatch({ type: 'IS_PENDING' })
+
+    try {
+      const updatedDocument = await ref.doc(docId).update(updateData)
+      dispatchIfNotUnmounted({ type: 'UPDATED_DOCUMENT', payload: updatedDocument })
+      return updatedDocument
+    } catch (err) {
+      console.log(err.message)
+      dispatchIfNotUnmounted({ type: 'ERROR', payload: err.message })
+      return null
+    }
+  }
+
+  return { response, addADocument, deleteADocument, updateADocument }
 }
