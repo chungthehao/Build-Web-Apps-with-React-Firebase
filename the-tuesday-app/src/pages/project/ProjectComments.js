@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Avatar from "../../components/Avatar";
 import { timestamp } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from "../../hooks/useFirestore";
@@ -33,7 +34,22 @@ function ProjectComments({ project }) {
 
   return (
     <div className="project-comments">
-      <h4 className="page-title">Add new comment:</h4>
+      <h4>Add new comment:</h4>
+
+      <ul>
+        {project.comments.length > 0 && project.comments.map(comment => (
+          <li key={comment.id}>
+            <div className="comment-author">
+              <Avatar src={comment.photoURL} />
+              <p>{comment.displayName}</p>
+            </div>
+            <div className="comment-date">Date here later</div>
+            <div className="comment-content">
+              {comment.content}
+            </div>
+          </li>
+        ))}
+      </ul>
 
       <form className="add-comment" onSubmit={handleSumbit}>
         <label>
