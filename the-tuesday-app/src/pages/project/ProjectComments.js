@@ -1,24 +1,34 @@
 import { useState } from "react";
 import { timestamp } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useFirestore } from "../../hooks/useFirestore";
 
-function ProjectComments() {
+function ProjectComments({ project }) {
   const [newComment, setNewComment] = useState('')
   const { user } = useAuthContext()
+  const { response, updateADocument } = useFirestore('projects')
 
-  const handleSumbit = e => {
+  const handleSumbit = async e => {
     e.preventDefault()
 
     // Prepare comment obj before saving it
-    const comment = {
+    const commentData = {
       id: Math.random(),
       content: newComment,
       CreatedAt: timestamp.fromDate(new Date()),
       displayName: user.displayName,
       photoURL: user.photoURL
     }
+    
+    // Save this comment
+    const updatedProject = await updateADocument(project.id, {
+      comments: [...project.comments, commentData]
+    })
+    // console.log(updatedProject)
 
-    console.log(comment)
+    if ( ! response.error) {
+      setNewComment('') // Clear the textarea, reset it
+    }
   }
 
   return (
