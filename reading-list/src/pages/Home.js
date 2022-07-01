@@ -1,14 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BookList from '../components/BookList'
 import BookForm from '../components/BookForm'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../firebase/config'
 
 export default function Home() {
-  const [books, setBooks] = useState([
-    { title: 'the name of the wind', id: 1 },
-    { title: 'the dragon reborn', id: 2 },
-    { title: 'the final empire', id: 3 },
-    { title: 'the way of kings', id: 4 }
-  ])
+  const [books, setBooks] = useState(null)
+
+  useEffect(() => {
+    const ref = collection(db, 'books')
+
+    getDocs(ref).then(snapshop => {
+      const tempResults = []
+      snapshop.docs.forEach(doc => {
+        tempResults.push({ id: doc.id, ...doc.data() })
+      })
+
+      setBooks(tempResults)
+    })
+  }, [])
 
   return (
     <div>
