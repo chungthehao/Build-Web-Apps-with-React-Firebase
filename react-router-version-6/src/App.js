@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
 
 // pages
 import Home from './pages/Home'
@@ -27,6 +27,7 @@ function App() {
               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati molestias facilis ipsam enim fugit, nisi ad nam ab id exercitationem?</p>
             </div>
           )} />
+          <Route path='/navigate-to-about' element={<Navigate to='/about' />} />
         </Routes>
       </BrowserRouter>
     </div>
