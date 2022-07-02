@@ -29,7 +29,7 @@ const AuthContextProvider = ({ children }) => {
     const unsub = onAuthStateChanged(auth, (firebaseUser) => {
       dispatch({
         type: 'AUTH_IS_READY',
-        payload: firebaseUser
+        payload: firebaseUser // Can be null or not, depending on the login state of the user on Firebase authentication
       })
 
       // onAuthStateChanged run the callback for the 1st time when web first loaded, and when the user signs in/out, we only need to run the callback once
