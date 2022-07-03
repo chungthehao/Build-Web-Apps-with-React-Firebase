@@ -19,7 +19,7 @@ function Sidebar() {
         <nav className="links">
           <ul>
             <li>
-              <NavLink to='/' exact>
+              <NavLink to='/'>
                 <img src={DashboardIcon} alt="Dashboard icon" />
                 <span>Dashboard</span>
               </NavLink>

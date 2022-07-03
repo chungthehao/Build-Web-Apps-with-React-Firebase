@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { timestamp } from '../../firebase/config';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -22,7 +22,7 @@ function Create() {
   const [assignedUsers, setAssignedUsers] = useState([])
   const [allUsers, setAllUsers] = useState([])
   const [formError, setFormError] = useState(null)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   // Get all of the users from Firestore
   const { documents } = useCollection('users')
@@ -82,7 +82,7 @@ function Create() {
     await addADocument(project)
     // Redirect after saving the project data successfully
     if ( ! response.error) {
-      history.push('/')
+      navigate('/')
     }
   }
 
