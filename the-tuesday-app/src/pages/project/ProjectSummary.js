@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Avatar from "../../components/Avatar";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFirestore } from "../../hooks/useFirestore";
@@ -6,11 +6,11 @@ import { useFirestore } from "../../hooks/useFirestore";
 function ProjectSummary({ project }) {
   const { user } = useAuthContext()
   const { deleteADocument } = useFirestore('projects')
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const handleDelete = () => {
     deleteADocument(project.id) // Don't need to wait, so there's no "await"
-    history.push('/') // Redirect to Dashboard
+    navigate('/') // Redirect to Dashboard
   }
 
   return ( 
